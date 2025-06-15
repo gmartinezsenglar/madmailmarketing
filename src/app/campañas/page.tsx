@@ -9,7 +9,7 @@ export default function VerCampanas() {
     <main className="min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl p-8 m-4">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 drop-shadow-md">Campañas Creadas</h1>
-        <Link href="/campanas/crear_campana">
+        <Link href="/campanas/crear">
           <button className="bg-gradient-to-r from-sky-400 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105">
             + Crear Campaña
           </button>
@@ -65,7 +65,7 @@ export default function VerCampanas() {
           <div className="bg-white/90 border-4 border-dashed border-gray-400 p-12 rounded-3xl shadow-inner backdrop-blur-md">
             <h3 className="text-2xl font-bold text-gray-700 mb-4">No hay campañas creadas</h3>
             <p className="text-gray-600 mb-8 text-lg">Comienza creando tu primera campaña de email marketing</p>
-            <Link href="/campanas/crear_campana">
+            <Link href="/campanas/crear">
               <button className="bg-gradient-to-r from-sky-400 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105">
                 Crear Primera Campaña
               </button>
