@@ -2,6 +2,7 @@
 
 import { listaContactos } from "@/app/clientes_simulado";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function CrearLista() {
   const [formularioNuevosContactos, setFormularioNuevosContactos] = useState([{ nombre: '', correo: '' }]);
@@ -20,6 +21,13 @@ export default function CrearLista() {
 
   return (
     <div className="text-black min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl pt-16 px-6">
+      <div className="relative">
+        <Link href="/clientes">
+          <button className="absolute top-0 right-0 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+          ← Volver a Lista de Clientes
+          </button>
+        </Link>
+      </div>
       <h1 className="text-black text-2xl font-bold mb-4">
         Crear Lista de Contactos
       </h1>
