@@ -4,6 +4,7 @@ import { useParams } from "next/navigation"
 import { listaContactos } from "@/app/clientes_simulado"
 import { Trash2 } from 'lucide-react'
 import { useState } from "react"
+import Link from 'next/link';
 
 export default function DetalleLista() {
   const { id } = useParams()
@@ -23,6 +24,11 @@ export default function DetalleLista() {
             className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
           >
             {mostrarFormulario ? "Cerrar" : "Agregar un contacto"}
+          </button>
+          <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mx-2">
+            <Link href="/clientes">
+            Volver a Lista de Clientes 
+            </Link>
           </button>
         </div>
         {mostrarFormulario && (
