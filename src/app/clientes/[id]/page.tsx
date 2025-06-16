@@ -14,7 +14,7 @@ export default function DetalleLista() {
   if (!lista) return <div className="p-4">Lista no encontrada</div>
 
   return (
-    <div className="flex flex-col min-h-screen text-black px-6 py-8">
+    <div className="text-black min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl pt-16 px-6">
       <div>
         <h1 className="text-black text-2xl font-bold mb-4">{lista.nombre}</h1>
         <div className="mb-5">
@@ -50,7 +50,7 @@ export default function DetalleLista() {
           {lista.contactos.map((contacto) => (
             <li
               key={contacto.id}
-              className="block p-4 border rounded hover:bg-gray-100 transition"
+              className="block p-4 border rounded hover:bg-gray-300 transition"
             >
               <p><strong>{contacto.nombre}</strong></p>
               <p className="text-sm text-gray-500">{contacto.correo}</p>

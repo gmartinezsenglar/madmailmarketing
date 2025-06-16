@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { listaContactos } from "@/app/clientes_simulado"
 export default function ListaClientes() {
   return (
-    <div className="flex flex-col min-h-screen text-black px-6 py-8">
+    <div className="pt-16 px-6 text-black min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl">
       <h1 className="text-2xl font-bold mb-4">Lista de Contactos</h1>      
       <ul className="space-y-4">
         {listaContactos.map((lista) => (
           <li key={lista.id}>
-            <Link href={`/clientes/${lista.id}`} className="block p-4 border rounded hover:bg-gray-100 transition">
+            <Link href={`/clientes/${lista.id}`} className="block p-4 border rounded hover:bg-gray-300 transition">
               {lista.nombre}
             </Link>
           </li>

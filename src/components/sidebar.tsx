@@ -27,6 +27,7 @@ export default function Sidebar() {
     { href: "/clientes", label: "Clientes", icon: "👥" },
     { href: "/perfil", label: "Perfil", icon: "👤" },
     { href: "/login", label: "Login", icon: "🔐" },
+    { href: "/redactar_correo", label: "Redactar", icon: "📧" },
   ]
 
   const isActive = (href: string) => {

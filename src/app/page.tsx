@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl flex flex-col items-center pt-16 px-6 m-4">
+    <main className="min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl flex flex-col items-center pt-16 px-6">
       {/* Título */}
       <h1 className="text-5xl font-bold text-gray-800 text-center mb-12 drop-shadow-md">
         MadMail Marketing Inc.
@@ -33,6 +33,11 @@ export default function Home() {
         <Link href="/perfil">
           <button className="px-6 py-2 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-100 transition shadow-sm">
             Perfil de Empresa
+          </button>
+        </Link>
+        <Link href="/redactar_correo">
+          <button className="px-6 py-2 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-100 transition shadow-sm">
+            Redactar Correo
           </button>
         </Link>
       </div>

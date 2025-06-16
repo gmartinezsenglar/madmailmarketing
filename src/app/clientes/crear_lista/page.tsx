@@ -19,7 +19,7 @@ export default function CrearLista() {
   const contactosUnicos = Array.from(mapContactos.values());
 
   return (
-    <div className="flex flex-col min-h-screen text-black px-6 py-8">
+    <div className="text-black min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl pt-16 px-6">
       <h1 className="text-black text-2xl font-bold mb-4">
         Crear Lista de Contactos
       </h1>

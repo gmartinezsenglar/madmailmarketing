@@ -5,8 +5,8 @@ import { listaContactos } from "@/app/clientes_simulado"
 export default function RedactarCorreo() {
 
   return (
-    <div className="flex flex-col min-h-screen text-black px-6 py-8">
-      <h1 className="text-black text-2xl font-bold mb-4">
+    <div className="text-black min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl pt-16 px-6">
+      <h1 className="text-2xl font-bold mb-4">
         Redactar Nuevo Correo
       </h1>
       <form className="flex flex-col">
