@@ -1,23 +1,39 @@
 'use client'
 
 import { useParams } from "next/navigation"
-import { listaContactos } from "@/app/clientes_simulado"
 import { Trash2 } from 'lucide-react'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from 'next/link';
+
+
+type Contacto = {
+  id_contacto: number
+  nombre: string
+  email: string
+}
 
 export default function DetalleLista() {
   const { id } = useParams()
-  const lista = listaContactos.find((unaLista) => unaLista.id === id)
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
+  const [contactos, setContactos] = useState<Contacto[]>([])
+  const [nombre, setNombre] = useState("")
 
-  if (!lista) return <div className="p-4">Lista no encontrada</div>
+  useEffect(() => {
+    if (!id) return;
+      fetch(`/api/clientes/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          setContactos(data.listas_contactos_contactos.map((c: any) => c.contactos))
+          setNombre(data.nombre)
+        })
+    }, [id])
 
+  
   return (
     <div className="text-black min-h-screen border-[16px] border-sky-400 bg-gradient-to-br from-white via-blue-50 to-sky-100 rounded-2xl shadow-2xl pt-16 px-6">
       <div>
-        <h1 className="text-black text-2xl font-bold mb-4">{lista.nombre}</h1>
+        <h1 className="text-black text-2xl font-bold mb-4">{nombre}</h1>
         <div className="mb-5">
           <button
             onClick={() => setMostrarFormulario(!mostrarFormulario)}
@@ -52,14 +68,14 @@ export default function DetalleLista() {
           </div>
         </form>
         )}
-        <ul className="space-y-4">
-          {lista.contactos.map((contacto) => (
+        <ul className="space-y-4 mb-3">
+          {contactos.map((contacto) => (
             <li
-              key={contacto.id}
+              key={contacto.id_contacto}
               className="block p-4 border rounded hover:bg-gray-300 transition"
             >
               <p><strong>{contacto.nombre}</strong></p>
-              <p className="text-sm text-gray-500">{contacto.correo}</p>
+              <p className="text-sm text-gray-500">{contacto.email}</p>
               <Trash2 className="text-black cursor-pointer" />
             </li>
           ))}

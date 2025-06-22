@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model campanas {
+  id_campana        Int       @id @default(autoincrement())
+  id_empresa        Int?
+  nombre            String?   @db.VarChar(255)
+  descripcion       String?
+  fecha_inicio      DateTime? @db.Timestamp(6)
+  fecha_fin         DateTime? @db.Timestamp(6)
+  correos_recibidos Int?
+  correos_enviados  Int?
+  empresas          empresas? @relation(fields: [id_empresa], references: [id_empresa], onDelete: NoAction, onUpdate: NoAction)
+  correos           correos[]
+}
+
+model contactos {
+  id_contacto                Int                          @id @default(autoincrement())
+  email                      String?                      @db.VarChar(255)
+  nombre                     String?                      @db.VarChar(255)
+  listas_contactos_contactos listas_contactos_contactos[]
+}
+
+model correos {
+  id_correo        Int               @id @default(autoincrement())
+  id_campana       Int?
+  asunto           String?           @db.VarChar(255)
+  contenido        String?
+  estado           String?           @db.VarChar(100)
+  id_lista         Int?
+  fecha_envio      DateTime?         @db.Timestamp(6)
+  fecha_programada DateTime?         @db.Timestamp(6)
+  total_enviados   Int?
+  total_entregados Int?
+  campanas         campanas?         @relation(fields: [id_campana], references: [id_campana], onDelete: NoAction, onUpdate: NoAction)
+  listas_contactos listas_contactos? @relation(fields: [id_lista], references: [id_lista], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model empresas {
+  id_empresa       Int                @id @default(autoincrement())
+  nombre           String?            @db.VarChar(255)
+  email            String?            @db.VarChar(255)
+  contrase_a       String?            @map("contraseña") @db.VarChar(255)
+  campanas         campanas[]
+  listas_contactos listas_contactos[]
+}
+
+model listas_contactos {
+  id_lista                   Int                          @id @default(autoincrement())
+  nombre                     String?                      @db.VarChar(255)
+  empresa_id                 Int?
+  correos                    correos[]
+  empresas                   empresas?                    @relation(fields: [empresa_id], references: [id_empresa], onDelete: NoAction, onUpdate: NoAction)
+  listas_contactos_contactos listas_contactos_contactos[]
+}
+
+model listas_contactos_contactos {
+  id_lista         Int
+  id_contacto      Int
+  contactos        contactos        @relation(fields: [id_contacto], references: [id_contacto], onDelete: Cascade, onUpdate: NoAction)
+  listas_contactos listas_contactos @relation(fields: [id_lista], references: [id_lista], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([id_lista, id_contacto])
+}
