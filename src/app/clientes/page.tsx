@@ -10,9 +10,10 @@ type Lista = {
 
 export default function ListaClientes() {
   const [listas, setListas] = useState<Lista[]>([])
+  const empresaId = 1
 
  useEffect(() => {
-  fetch('/api/clientes')
+  fetch(`/api/clientes?empresaId=${empresaId}`)
     .then((res) => res.json())
     .then((data) => setListas(data)
     )

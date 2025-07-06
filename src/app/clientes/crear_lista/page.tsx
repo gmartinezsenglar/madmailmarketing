@@ -54,6 +54,12 @@ export default function CrearLista() {
       })
 
       const data = await res.json()
+      
+      if (!res.ok) {
+        alert(data.error)
+        return
+      }
+
       alert(data.message)
       router.push('/clientes')
     } catch (error: any) {
@@ -84,11 +90,13 @@ export default function CrearLista() {
             className="w-full border-b-2 border-gray-400 focus:border-blue-600 focus:outline-none py-2"
           />
         </div>
-
         <div className="mb-8">
           <label className="block text-lg mb-2">Seleccionar Contactos Existentes</label>
           <div className="space-y-2">
-            {contactosExistentes.map(contacto => (
+            {contactosExistentes.length === 0 ? (
+              <p className="text-gray-500 italic"> ¡No hay Contactos Dipsonibles! <br /> Agregue un Contacto ↓</p>
+            ):(
+            contactosExistentes.map(contacto => (
               <label key={contacto.id_contacto} className="flex items-center space-x-3">
                 <input
                   type="checkbox"
@@ -100,10 +108,10 @@ export default function CrearLista() {
                   {contacto.nombre} - <span className="text-gray-500 text-sm">{contacto.email}</span>
                 </span>
               </label>
-            ))}
+             ))
+            )}
           </div>
         </div>
-
         <div className="mb-4">
           <h2 className="text-lg font-semibold mb-4">Agregar Nuevos Contactos</h2>
           {formularioNuevosContactos.map((_, index) => (

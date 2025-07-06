@@ -22,7 +22,7 @@ model campanas {
 
 model contactos {
   id_contacto                Int                          @id @default(autoincrement())
-  email                      String?                      @db.VarChar(255)
+  email                      String?                      @unique(map: "contactos_email_unique") @db.VarChar(255)
   nombre                     String?                      @db.VarChar(255)
   listas_contactos_contactos listas_contactos_contactos[]
 }
