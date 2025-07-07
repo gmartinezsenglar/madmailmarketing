@@ -2,9 +2,57 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function LoginRegistro() {
+  const router = useRouter();
   const [modo, setModo] = useState<'login' | 'registro'>('login');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
+
+  const Login = async () => {
+    if (!email || !password) {
+      alert("Completa todos los campos");
+      return;
+    }
+
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+      credentials: 'include'
+    });
+    const data = await res.json();
+    alert(data.mensaje || data.error);
+    
+    if (res.ok) {
+      router.push('/'); 
+    }
+  };
+
+  const Register = async () => {
+
+    if (!email || !nombre || !password || !passwordConfirm) {
+      alert("Completa todos los campos");
+      return;
+    }
+    
+    if (password !== passwordConfirm) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre, email, password }),
+    });
+    const data = await res.json();
+    alert(data.mensaje || data.error);
+  };
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-200 border-[20px] border-sky-400 rounded-2xl shadow-2xl px-4">
@@ -12,29 +60,33 @@ export default function LoginRegistro() {
         
         {/* Formularios estáticos */}
         <div className="absolute top-0 left-0 w-1/2 h-full p-10 flex flex-col justify-center gap-5 z-10">
-          <h2 className="text-3xl font-bold text-sky-300 mb-2">Iniciar Sesión</h2>
+          <h2 className="text-3xl font-bold text-sky-300 mb-2">Iniciar Sesión / Cambiar de Cuenta</h2>
           <input type="email" placeholder="Correo electrónico"
+            value={email} onChange={(e) => setEmail(e.target.value)}
             className="bg-gray-700 placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400" />
           <input type="password" placeholder="Contraseña"
+            value={password} onChange={(e) => setPassword(e.target.value)}
             className="bg-gray-700 placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400" />
-          <button className="bg-sky-400 text-white font-semibold py-3 rounded-md hover:bg-sky-500 transition">
+          <button onClick={Login} className="bg-sky-400 text-white font-semibold py-3 rounded-md hover:bg-sky-500 transition">
             Ingresar
           </button>
         </div>
 
         <div className="absolute top-0 right-0 w-1/2 h-full p-10 flex flex-col justify-center gap-4 z-10">
           <h2 className="text-3xl font-bold text-sky-300 mb-2">Registro de Usuario</h2>
-          <input type="text" placeholder="Nombre completo"
-            className="bg-gray-700 placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400" />
-          <input type="text" placeholder="Nombre de usuario"
+          <input type="text" placeholder="Nombre"
+            value={nombre} onChange={(e) => setNombre(e.target.value)}
             className="bg-gray-700 placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400" />
           <input type="email" placeholder="Correo electrónico"
+            value={email} onChange={(e) => setEmail(e.target.value)}
             className="bg-gray-700 placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400" />
           <input type="password" placeholder="Contraseña"
+            value={password} onChange={(e) => setPassword(e.target.value)}
             className="bg-gray-700 placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400" />
           <input type="password" placeholder="Confirmar contraseña"
+            value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}
             className="bg-gray-700 placeholder-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400" />
-          <button className="bg-sky-400 text-white font-semibold py-3 rounded-md hover:bg-sky-500 transition">
+          <button onClick={Register} className="bg-sky-400 text-white font-semibold py-3 rounded-md hover:bg-sky-500 transition">
             Crear cuenta
           </button>
         </div>
