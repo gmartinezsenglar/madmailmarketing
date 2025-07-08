@@ -6,6 +6,10 @@ import { cookies } from 'next/headers';
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET!;
 
+interface JwtPayload {
+  empresaId: number;
+}
+
 export async function GET() {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
@@ -14,9 +18,9 @@ export async function GET() {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
   }
 
-  let decoded: any;
+  let decoded: JwtPayload;
   try {
-    decoded = jwt.verify(token, JWT_SECRET);
+    decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
   } catch {
     return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
   }
@@ -28,6 +32,13 @@ export async function GET() {
 
   const listas = await prisma.listas_contactos.findMany({
     where: { empresa_id: empresaId },
+    include: {
+      listas_contactos_contactos: {
+        include: {
+          contactos: true,
+        },
+      },
+    },
   });
 
   return NextResponse.json({ listas });
